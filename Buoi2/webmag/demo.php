@@ -29,6 +29,17 @@
 	}
 echo $count = count($posts);
 echo "<pre>";
-print_r($test_value);
+print_r($posts);
+echo "xong mảng";
 
- ?>
+$new = array();
+foreach ($posts as $key => $value) {
+	if($key == $count - 1){
+		echo "<pre>";	
+		$new = $value;
+	}
+}
+echo "<pre>";
+print_r($new);
+echo "-----------------";
+echo $new['id'];

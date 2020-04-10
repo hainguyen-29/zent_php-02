@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>WebMag HTML Template</title>
+		<title>Nguyễn Quang Hải</title>
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet"> 
@@ -61,7 +61,7 @@
 					<div class="container">
 						<!-- logo -->
 						<div class="nav-logo">
-							<a href="index.html" class="logo"><img src="./img/logo.png" alt=""></a>
+							<a href="index.php" class="logo"><img src="./img/logo.png" alt=""></a>
 						</div>
 						<!-- /logo -->
 
@@ -95,7 +95,7 @@
 					<!-- nav -->
 					<div class="section-row">
 						<ul class="nav-aside-menu">
-							<li><a href="index.html">Home</a></li>
+							<li><a href="index.php">Home</a></li>
 							<li><a href="about.html">About Us</a></li>
 							<li><a href="#">Join Us</a></li>
 							<li><a href="#">Advertisement</a></li>
@@ -209,7 +209,7 @@
 
 					<div class="col-md-4">
 						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src="./img/post-3.jpg" alt=""></a>
+							<a class="post-img" href="blog-post.html"><img width="400" height="300" src="<?php echo $value['thumbnail']; ?>" alt="" ></a>
 							<div class="post-body">
 								<div class="post-meta">
 									<a class="post-category cat-1" href="category.html"><?php echo $value['title'] ?></a>
@@ -225,199 +225,68 @@
 			}
 								?>
 
-					<!-- /post -->
-
-					<!-- post -->
-					<!-- <div class="col-md-4">
-						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src="./img/post-4.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-meta">
-									<a class="post-category cat-2" href="category.html">JavaScript</a>
-									<span class="post-date">March 27, 2018</span>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-							</div>
-						</div>
-					</div> -->
-					<!-- /post -->
-
-					<!-- post -->
-				<!-- 	<div class="col-md-4">
-						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-meta">
-									<a class="post-category cat-3" href="category.html">Jquery</a>
-									<span class="post-date">March 27, 2018</span>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-							</div>
-						</div>
-					</div> -->
-					<!-- /post -->
-
 					<div class="clearfix visible-md visible-lg"></div>
-
-					<!-- post -->
-					<div class="col-md-4">
-						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src="./img/post-6.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-meta">
-									<a class="post-category cat-2" href="category.html">JavaScript</a>
-									<span class="post-date">March 27, 2018</span>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-							</div>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="col-md-4">
-						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src="./img/post-1.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-meta">
-									<a class="post-category cat-4" href="category.html">Css</a>
-									<span class="post-date">March 27, 2018</span>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">CSS Float: A Tutorial</a></h3>
-							</div>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="col-md-4">
-						<div class="post">
-							<a class="post-img" href="blog-post.html"><img src="./img/post-2.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-meta">
-									<a class="post-category cat-1" href="category.html">Web Design</a>
-									<span class="post-date">March 27, 2018</span>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-							</div>
-						</div>
-					</div>
-					<!-- /post -->
 				</div>
 				<!-- /row -->
 
 				<!-- row -->
+				<?php 
+						$new_post = array();
+						$count = count($posts);
+						foreach ($posts as $key => $value) {
+							if($key == $count - 1){
+								$new = $value;
+							}
+						}
+				 ?>
+
 				<div class="row">
 					<div class="col-md-8">
 						<div class="row">
 							<!-- post -->
 							<div class="col-md-12">
 								<div class="post post-thumb">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-2.jpg" alt=""></a>
+									<a class="post-img" href="blog-post.html"><img src="<?php echo $new['thumbnail']; ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-3" href="category.html">Jquery</a>
-											<span class="post-date">March 27, 2018</span>
+											<a class="post-category cat-3" href="category.html"><?php echo $new['title']; ?></a>
+											<span class="post-date"><?php $new['created_at'] ?></span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
+										<h3 class="post-title"><a href="blog-post.html"><?php echo $new['description'] ?></a></h3>
 									</div>
 								</div>
 							</div>
 							<!-- /post -->
-
+<!--  //CODE PHP VÀO ĐÂY -->
 							<!-- post -->
+							<?php 
+								$number_posts = 6;
+								$count = count($posts);
+
+								foreach ($posts as $value) {
+									if($count  > (count($posts) - $number_posts)){
+					 				?>
+							 
 							<div class="col-md-6">
 								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-1.jpg" alt=""></a>
+									<a class="post-img" href="blog-post.html"><img width="400" height="300" src="<?php echo $value['thumbnail']; ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-4" href="category.html">Css</a>
-											<span class="post-date">March 27, 2018</span>
+											<a class="post-category cat-4" href="category.html"><?php echo $value['title']; ?></a>
+											<span class="post-date"><?php echo $value['created_at']; ?></span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">CSS Float: A Tutorial</a></h3>
+										<h3 class="post-title"><a href="blog-post.html"><?php echo $value['description']; ?></a></h3>
 									</div>
 								</div>
 							</div>
-							<!-- /post -->
 
-							<!-- post -->
-							<div class="col-md-6">
-								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-2.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-1" href="category.html">Web Design</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-									</div>
-								</div>
-							</div>
-							<!-- /post -->
+							<?php 
+									} $count--;
+								}
+							?>
 
 							<div class="clearfix visible-md visible-lg"></div>
-
-							<!-- post -->
-							<div class="col-md-6">
-								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-4.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-2" href="category.html">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-									</div>
-								</div>
-							</div>
-							<!-- /post -->
-
-							<!-- post -->
-							<div class="col-md-6">
-								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-3" href="category.html">Jquery</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-									</div>
-								</div>
-							</div>
-							<!-- /post -->
-
 							<div class="clearfix visible-md visible-lg"></div>
-
-							<!-- post -->
-							<div class="col-md-6">
-								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-3.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-1" href="category.html">Web Design</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
-									</div>
-								</div>
-							</div>
-							<!-- /post -->
-
-							<!-- post -->
-							<div class="col-md-6">
-								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-4.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-2" href="category.html">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-									</div>
-								</div>
-							</div>
-							<!-- /post -->
 						</div>
 					</div>
 
@@ -709,7 +578,7 @@
 					<div class="col-md-5">
 						<div class="footer-widget">
 							<div class="footer-logo">
-								<a href="index.html" class="logo"><img src="./img/logo.png" alt=""></a>
+								<a href="index.php" class="logo"><img src="./img/logo.png" alt=""></a>
 							</div>
 							<ul class="footer-nav">
 								<li><a href="#">Privacy Policy</a></li>
