@@ -4,28 +4,12 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
 		<title>Nguyễn Quang Hải</title>
-
-		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet"> 
-
-		<!-- Bootstrap -->
 		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-
-		<!-- Font Awesome Icon -->
 		<link rel="stylesheet" href="css/font-awesome.min.css">
-
-		<!-- Custom stlylesheet -->
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 
-		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
 	<?php 
 	$severName = "localhost";
 
@@ -33,21 +17,36 @@
 
 	$passWord = "";
 
-	$db				= "zent";
+	$db				= "test";
 
 // Tạo kết nối
 	$connection_mysql = new mysqli($severName, $userName, $passWord,$db);
 // Tạo Truy vấn 
-	$query = "SELECT * FROM posts";
 
+
+	// $query = "SELECT posts.*,categories.title as 'category_title' FROM `posts` INNER JOIN categories ON posts.category_id=categories.id";
+
+	$query = "SELECT posts.*,categories.title as 'category_title' FROM posts INNER JOIN categories ON posts.category_id=categories.id WHERE posts.status = 1 ORDER BY posts.id asc";
 	$result = mysqli_query($connection_mysql, $query);
 // THỰC HIỆN TRUY VẤN DỮ LIỆU TRONG TABLE posts
 	// Tạo Mảng Lưu Dữ Liệu Của Các Cột
 	$posts = array();
 
+
 	while ($row = mysqli_fetch_assoc($result)) {
 		$posts[] = $row;
 	}
+
+	// echo "<pre>";
+	// print_r($posts);
+	// echo "<pre>";
+
+	// echo "----------------------";
+	// echo "<pre>";
+	// print_r($posts[12]['id']);
+
+	// echo count($posts);
+	// die;
  ?>
     </head>
 	<body>
@@ -203,19 +202,25 @@
 					<?php
 						$number_posts = 6;
 						$count = count($posts);
-						foreach ($posts as $value){
+
+						for($key = $count - 1; $key >= 0; $key--){
 							if($count  > (count($posts) - $number_posts)){
 					 ?>
 
 					<div class="col-md-4">
 						<div class="post">
-							<a class="post-img" href="blog-post.html"><img width="400" height="300" src="<?php echo $value['thumbnail']; ?>" alt="" ></a>
+							<a class="post-img" href="blog-post.html"><img width="400" height="300" src="<?php echo $posts[$key]['thumbnail']; ?>" alt="" ></a>
 							<div class="post-body">
 								<div class="post-meta">
-									<a class="post-category cat-1" href="category.html"><?php echo $value['title'] ?></a>
-									<span class="post-date"> <?php echo $value['created_at'] ?>	</span>
+									<a class="post-category cat-<?php $_bgcolor = 4;
+											if($posts[$key]['category_title'] == "Web Design") $_bgcolor = 1;
+											if($posts[$key]['category_title'] == "JavaScript") $_bgcolor = 2;
+											if($posts[$key]['category_title'] == "jQuery") $_bgcolor = 3;
+											echo $_bgcolor;			
+									 ?>" href="category.html"><?php echo $posts[$key]['category_title'] ?></a>
+									<span class="post-date"> <?php echo $posts[$key]['created_at'] ?>	</span>
 								</div>
-								<h3 class="post-title"><a href="blog-post.html"><?php echo $value['description'] ?></a></h3>
+								<h3 class="post-title"><a href="blog-post.html"><?php echo $posts[$key]['title'] ?></a></h3>
 							</div>
 						</div>
 					</div>
@@ -249,10 +254,15 @@
 									<a class="post-img" href="blog-post.html"><img src="<?php echo $new['thumbnail']; ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-3" href="category.html"><?php echo $new['title']; ?></a>
+											<a class="post-category cat-<?php $_bgcolor = 4;
+											if($posts[$key]['category_title'] == "Web Design") $_bgcolor = 1;
+											if($posts[$key]['category_title'] == "JavaScript") $_bgcolor = 2;
+											if($posts[$key]['category_title'] == "jQuery") $_bgcolor = 3;
+											echo $_bgcolor;			
+									 ?>" href="category.html"><?php echo $new['category_title'] ?></a>
 											<span class="post-date"><?php $new['created_at'] ?></span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html"><?php echo $new['description'] ?></a></h3>
+										<h3 class="post-title"><a href="blog-post.html"><?php echo $new['title']; ?></a></h3>
 									</div>
 								</div>
 							</div>
@@ -272,10 +282,15 @@
 									<a class="post-img" href="blog-post.html"><img width="400" height="300" src="<?php echo $value['thumbnail']; ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-4" href="category.html"><?php echo $value['title']; ?></a>
+											<a class="post-category cat-<?php $_bgcolor2 = 3;
+											if($value['category_title'] == "Web Design") $_bgcolor2 = 1;
+											if($value['category_title'] == "JavaScript") $_bgcolor2 = 2;
+											if($value['category_title'] == "CSS") $_bgcolor2 = 4;
+											echo $_bgcolor2;			
+									 ?>" href="category.html"><?php echo $value['category_title'] ?></a>
 											<span class="post-date"><?php echo $value['created_at']; ?></span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html"><?php echo $value['description']; ?></a></h3>
+										<h3 class="post-title"><a href="blog-post.html"><?php echo $value['title']; ?></a></h3>
 									</div>
 								</div>
 							</div>
