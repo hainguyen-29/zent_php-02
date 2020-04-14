@@ -27,14 +27,22 @@
 	// $query = "SELECT posts.*,categories.title as 'category_title' FROM `posts` INNER JOIN categories ON posts.category_id=categories.id";
 
 	$query = "SELECT posts.*,categories.title as 'category_title' FROM posts INNER JOIN categories ON posts.category_id=categories.id WHERE posts.status = 1 ORDER BY posts.id asc";
+	$query_categories = "SELECT * FROM categories";
+
 	$result = mysqli_query($connection_mysql, $query);
+	$result_categories = mysqli_query($connection_mysql, $query_categories);
 // THỰC HIỆN TRUY VẤN DỮ LIỆU TRONG TABLE posts
 	// Tạo Mảng Lưu Dữ Liệu Của Các Cột
 	$posts = array();
+	$categories = array();
 
-
+//posts
 	while ($row = mysqli_fetch_assoc($result)) {
 		$posts[] = $row;
+	}
+//categories
+	while ($row_categories = mysqli_fetch_assoc($result_categories)) {
+		$categories[] = $row_categories;
 	}
 
 	// echo "<pre>";
@@ -68,10 +76,17 @@
 						<ul class="nav-menu nav navbar-nav">
 							<li><a href="category.html">News</a></li>
 							<li><a href="category.html">Popular</a></li>
-							<li class="cat-1"><a href="category.html">Web Design</a></li>
-							<li class="cat-2"><a href="category.html">JavaScript</a></li>
-							<li class="cat-3"><a href="category.html">Css</a></li>
-							<li class="cat-4"><a href="category.html">Jquery</a></li>
+							<?php 
+								foreach ($categories as $value) {
+									
+							?>	
+									<li class="cat-<?php $_color= 1;
+									if($value['title'] == "JavaScript") $_color = 2;
+									if($value['title'] == "CSS") $_color = 3;
+									if($value['title'] == "jQuery") $_color = 4;
+									echo $_color; ?>"><a href="category.html"><?php echo $value['title']; ?></a></li>
+							 <?php }
+							  ?>
 						</ul>
 						<!-- /nav -->
 
