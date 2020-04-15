@@ -1,3 +1,24 @@
+<?php require_once('connection.php');
+//LAY 3 BAI MOI NHAT
+	$id = $_GET['id'];
+	$query_3post ="SELECT posts.*,categories.title AS category_title FROM posts LEFT JOIN categories ON posts.category_id=categories.id WHERE categories.id =".$id." ORDER BY created_at desc LIMIT 3";
+	$result_categories_3post = mysqli_query($connection_mysql, $query_3post);
+	$categories_3post = array();
+
+	
+	while ($row2 = mysqli_fetch_assoc($result_categories_3post)) {
+		$categories_3post[] = $row2;
+	}
+//Lay 5 bai tiep theo
+	$query_5post ="SELECT posts.*,categories.title AS category_title FROM posts LEFT JOIN categories ON posts.category_id=categories.id WHERE categories.id =".$id." ORDER BY created_at desc LIMIT 3,5";
+	$result_categories_5post = mysqli_query($connection_mysql, $query_5post);
+	$categories_5post = array();
+
+	
+	while ($row2 = mysqli_fetch_assoc($result_categories_5post)) {
+		$categories_5post[] = $row2;
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -45,12 +66,9 @@
 
 						<!-- nav -->
 						<ul class="nav-menu nav navbar-nav">
-							<li><a href="category.html">News</a></li>
-							<li><a href="category.html">Popular</a></li>
-							<li class="cat-1"><a href="category.html">Web Design</a></li>
-							<li class="cat-2"><a href="category.html">JavaScript</a></li>
-							<li class="cat-3"><a href="category.html">Css</a></li>
-							<li class="cat-4"><a href="category.html">Jquery</a></li>
+							<li><a href="#">News</a></li>
+							<li><a href="#">Popular</a></li>
+							<?php require_once('menu.php')  ?>
 						</ul>
 						<!-- /nav -->
 
@@ -86,23 +104,23 @@
 					<div class="section-row">
 						<h3>Recent Posts</h3>
 						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="./img/widget-2.jpg" alt=""></a>
+							<a class="post-img" href="blog-post.php"><img src="./img/widget-2.jpg" alt=""></a>
 							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
+								<h3 class="post-title"><a href="blog-post.php">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
 							</div>
 						</div>
 
 						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="./img/widget-3.jpg" alt=""></a>
+							<a class="post-img" href="blog-post.php"><img src="./img/widget-3.jpg" alt=""></a>
 							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
+								<h3 class="post-title"><a href="blog-post.php">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
 							</div>
 						</div>
 
 						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="./img/widget-4.jpg" alt=""></a>
+							<a class="post-img" href="blog-post.php"><img src="./img/widget-4.jpg" alt=""></a>
 							<div class="post-body">
-								<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+								<h3 class="post-title"><a href="blog-post.php">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
 							</div>
 						</div>
 					</div>
@@ -135,9 +153,17 @@
 						<div class="col-md-10">
 							<ul class="page-header-breadcrumb">
 								<li><a href="index.php">Home</a></li>
-								<li>JavaScript</li>
+								<li><?php foreach ($categories_3post as $key => $value) {
+									echo $value['category_title'];
+									break;
+								}
+								 ?></li>
 							</ul>
-							<h1>JavaScript</h1>
+							<h1><?php foreach ($categories_3post as $key => $value) {
+									echo $value['category_title'];
+									break;
+								}
+								 ?></h1>
 						</div>
 					</div>
 				</div>
@@ -155,49 +181,63 @@
 					<div class="col-md-8">
 						<div class="row">
 							<!-- post -->
+							<?php foreach ($categories_3post as $key => $value) {
+								
+							 ?>
 							<div class="col-md-12">
 								<div class="post post-thumb">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-1.jpg" alt=""></a>
+									<a class="post-img" href="blog-post.php"><img src="<?php echo $value['thumbnail'] ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
+											<a class="post-category cat-<?php 
+												$_color= 1;
+												if($value['category_title'] == "JavaScript") $_color = 2;
+												if($value['category_title'] == "CSS") $_color = 4;
+												if($value['category_title'] == "jQuery") $_color = 3;
+												echo $_color;
+											 ?>" href="#"><?php echo $value['category_title'] ?></a>
+											<span class="post-date"><?php echo $value['created_at'] ?></span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">Javascript : Prototype vs Class</a></h3>
+										<h3 class="post-title"><a href="blog-post.php"><?php echo $value['title'] ?></a></h3>
 									</div>
 								</div>
 							</div>
+						<?php break;
+					} ?>
 							<!-- /post -->
 										
 							<!-- post -->
+							<?php 
+							$_count = 0;
+							
+							foreach ($categories_3post as $key => $value) {
+								if($_count > 0 && $_count <3){
+							  ?>
 							<div class="col-md-6">
 								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-4.jpg" alt=""></a>
+									<a class="post-img" href="blog-post.php"><img src="<?php echo $value['thumbnail'] ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
+											<a class="post-category cat-<?php 
+												$_color= 1;
+												if($value['category_title'] == "JavaScript") $_color = 2;
+												if($value['category_title'] == "CSS") $_color = 4;
+												if($value['category_title'] == "jQuery") $_color = 3;
+												echo $_color;
+											 ?>" href="#"><?php echo $value['category_title'] ?></a>
+											<span class="post-date"><?php echo $value['created_at'] ?></span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
+										<h3 class="post-title"><a href="blog-post.php"><?php echo $value['title'] ?></a></h3>
 									</div>
 								</div>
 							</div>
+						<?php }
+
+						 $_count++;
+						} ?>
 							<!-- /post -->
 
-							<!-- post -->
-							<div class="col-md-6">
-								<div class="post">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-6.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-									</div>
-								</div>
-							</div>
-							<!-- /post -->
+							
 							
 							<div class="clearfix visible-md visible-lg"></div>
 							
@@ -212,67 +252,40 @@
 							<!-- ad -->
 							
 							<!-- post -->
+							<?php foreach ($categories_5post as $key => $value) {
+						 ?>
 							<div class="col-md-12">
 								<div class="post post-row">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-2.jpg" alt=""></a>
+									<a class="post-img" href="blog-post.php"><img src="<?php echo $value['thumbnail'] ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
+											<a class="post-category cat-<?php 
+												$_color= 1;
+												if($value['category_title'] == "JavaScript") $_color = 2;
+												if($value['category_title'] == "CSS") $_color = 4;
+												if($value['category_title'] == "jQuery") $_color = 3;
+												echo $_color;
+											 ?>" href="#"><?php echo $value['category_title'] ?></a>
+											<span class="post-date"><?php echo $value['created_at'] ?></span>
 										</div>
-										<h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
+										<h3 class="post-title"><a href="blog-post.php"><?php echo $value['title'] ?></a></h3>
+										<p><?php echo $value['desciption'] ?></p>
 									</div>
 								</div>
 							</div>
+						<?php } ?>
 							<!-- /post -->
 							
 							<!-- post -->
-							<div class="col-md-12">
-								<div class="post post-row">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Microsoft’s TypeScript Fills A Long-standing Void In JavaScript</a></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-									</div>
-								</div>
-							</div>
+							
 							<!-- /post -->
 
 							<!-- post -->
-							<div class="col-md-12">
-								<div class="post post-row">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-3.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Javascript : Prototype vs Class</a></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-									</div>
-								</div>
-							</div>
+							
 							<!-- /post -->
 							
 							<!-- post -->
-							<div class="col-md-12">
-								<div class="post post-row">
-									<a class="post-img" href="blog-post.html"><img src="./img/post-1.jpg" alt=""></a>
-									<div class="post-body">
-										<div class="post-meta">
-											<a class="post-category cat-2" href="#">JavaScript</a>
-											<span class="post-date">March 27, 2018</span>
-										</div>
-										<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-									</div>
-								</div>
-							</div>
+							
 							<!-- /post -->
 							
 							<div class="col-md-12">
@@ -299,30 +312,30 @@
 							</div>
 
 							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./img/widget-1.jpg" alt=""></a>
+								<a class="post-img" href="blog-post.php"><img src="./img/widget-1.jpg" alt=""></a>
 								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+									<h3 class="post-title"><a href="blog-post.php">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
 								</div>
 							</div>
 
 							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./img/widget-2.jpg" alt=""></a>
+								<a class="post-img" href="blog-post.php"><img src="./img/widget-2.jpg" alt=""></a>
 								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
+									<h3 class="post-title"><a href="blog-post.php">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
 								</div>
 							</div>
 
 							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./img/widget-3.jpg" alt=""></a>
+								<a class="post-img" href="blog-post.php"><img src="./img/widget-3.jpg" alt=""></a>
 								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
+									<h3 class="post-title"><a href="blog-post.php">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
 								</div>
 							</div>
 
 							<div class="post post-widget">
-								<a class="post-img" href="blog-post.html"><img src="./img/widget-4.jpg" alt=""></a>
+								<a class="post-img" href="blog-post.php"><img src="./img/widget-4.jpg" alt=""></a>
 								<div class="post-body">
-									<h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+									<h3 class="post-title"><a href="blog-post.php">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
 								</div>
 							</div>
 						</div>
@@ -423,10 +436,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 								<div class="footer-widget">
 									<h3 class="footer-title">Catagories</h3>
 									<ul class="footer-links">
-										<li><a href="category.html">Web Design</a></li>
-										<li><a href="category.html">JavaScript</a></li>
-										<li><a href="category.html">Css</a></li>
-										<li><a href="category.html">Jquery</a></li>
+										<li><a href="category.php">Web Design</a></li>
+										<li><a href="category.php">JavaScript</a></li>
+										<li><a href="category.php">Css</a></li>
+										<li><a href="category.php">Jquery</a></li>
 									</ul>
 								</div>
 							</div>
